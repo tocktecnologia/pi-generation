@@ -12,6 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('pi_gen_' + e.target.id, e.target.value);
         });
     });
+    const clearBtn = document.getElementById('clearBtn');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            if (confirm('Tem certeza que deseja limpar todos os campos?')) {
+                inputs.forEach(input => {
+                    input.value = '';
+                    localStorage.removeItem('pi_gen_' + input.id);
+                });
+            }
+        });
+    }
 });
 
 document.getElementById('piForm').addEventListener('submit', async function (e) {
