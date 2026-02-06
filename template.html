@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido de Inserção</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 10px;
+            color: #000;
+            margin: 0;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Helpers */
+        .bold {
+            font-weight: 700;
+        }
+
+        .uppercase {
+            text-transform: uppercase;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        /* Layout bits */
+        .row {
+            display: flex;
+            width: 100%;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spacer {
+            height: 10px;
+        }
+
+        /* Bordered sections */
+        .bordered-top {
+            border-top: 2px solid #000;
+        }
+
+        .bordered-bottom {
+            border-bottom: 2px solid #000;
+        }
+
+        .bordered-box {
+            border: 1px solid #999;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .header-left h1 {
+            font-size: 18px;
+            margin: 0;
+            color: #333;
+        }
+
+        .header-left h2 {
+            font-size: 14px;
+            margin: 2px 0 0 0;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .header-right {
+            font-size: 9px;
+            text-align: right;
+            display: flex;
+            gap: 15px;
+        }
+
+        .agency-info {
+            text-align: left;
+        }
+
+        .logo {
+            width: 60px;
+            height: auto;
+            align-self: flex-start;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            border-top: 2px solid #000;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .info-row {
+            display: contents;
+        }
+
+        .info-cell {
+            padding: 4px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .info-cell.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .info-cell.span-2 {
+            grid-column: span 2;
+        }
+
+        .info-cell.span-3 {
+            grid-column: span 3;
+        }
+
+        .label {
+            font-weight: 700;
+            margin-right: 5px;
+        }
+
+        /* Tables */
+        .grade-section {
+            margin-top: 15px;
+            border: 1px solid #888;
+        }
+
+        .grade-header {
+            background-color: #f0f0f0;
+            padding: 4px;
+            font-weight: 700;
+            border-bottom: 1px solid #888;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9px;
+        }
+
+        th {
+            background-color: #e0e0e0;
+            text-align: left;
+            padding: 4px;
+            border-bottom: 1px solid #888;
+            font-weight: 700;
+        }
+
+        td {
+            padding: 4px;
+            border-bottom: 1px solid #eee;
+        }
+
+        td.border-right {
+            border-right: 1px solid #ccc;
+        }
+
+        .total-row {
+            text-align: right;
+            padding: 5px;
+            font-weight: 700;
+        }
+
+        /* Footer Boxes */
+        .footer-boxes {
+            display: flex;
+            border: 1px solid #888;
+            margin-top: 15px;
+            min-height: 120px;
+        }
+
+        .box-left {
+            /* Valores Finais */
+            width: 20%;
+            border-right: 1px solid #888;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .box-middle {
+            /* Instruções */
+            width: 40%;
+            border-right: 1px solid #888;
+            padding: 5px;
+        }
+
+        .box-right {
+            /* Dados Veículo/Cliente */
+            width: 40%;
+            padding: 5px;
+        }
+
+        .val-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+        }
+
+        .val-total {
+            border-top: 1px solid #888;
+            background-color: #f9f9f9;
+            font-weight: 700;
+        }
+
+        .box-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        /* Page Footer */
+        .page-footer {
+            margin-top: 30px;
+            border-top: 1px solid #000;
+            padding-top: 5px;
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header>
+            <div class="header-left">
+                <h1>Pedido de Inserção Nº {{PI_Number}}</h1>
+                <h2>ELETROMIDIA - MRH.FACINE</h2>
+            </div>
+            <div class="header-right">
+                <div class="agency-info">
+                    <span class="bold">DELANTERO COMUNICAÇÃO</span><br>
+                    DELANTERO COMUNICACAO E PUBLICIDADE LTDA<br>
+                    CNPJ: 17.204.476/0001-47
+                </div>
+                <div class="agency-contact">
+                    natalia@delantero.com.br<br>
+                    (85) 98645-1944<br>
+                    CEP: 60160230 / Avenida Dom Luís Nº 1200, salas 1610 | 1611 - Torre 1<br>
+                    Meireles - Fortaleza / CE
+                </div>
+                <!-- Placeholder for logo if available, or text representation -->
+                <div style="font-weight:800; font-size:14px; line-height:1;">
+                    delan<br>tero
+                </div>
+            </div>
+        </header>
+
+        <!-- Top Info Grid -->
+        <div class="info-grid">
+            <!-- Row 1 -->
+            <div class="info-cell span-2">
+                <span class="label">Contato na Agência:</span> {{Agency_Contact}}
+            </div>
+            <div class="info-cell span-2 text-right">
+                <span class="label">Data:</span> {{Date}}
+            </div>
+
+            <!-- Row 2 -->
+            <div class="info-cell full-width">
+                <span class="label">Veículo:</span> {{Vehicle_Name}}
+            </div>
+
+            <!-- Row 3 -->
+            <div class="info-cell">
+                <span class="label">Mídia:</span> <span
+                    style="background:#555; color:#fff; padding:0 2px;">Outras</span>
+            </div>
+            <div class="info-cell">
+                <span class="label">Anunciante:</span> {{Advertiser_Name}}
+            </div>
+            <div class="info-cell padding-right">
+                <span class="label">Projeto:</span> {{Project_Name}}
+            </div>
+            <div class="info-cell text-right">
+                <span class="label">Total Inserções:</span> 1
+            </div>
+
+            <!-- Row 4 -->
+            <div class="info-cell full-width" style="border-bottom:none;">
+                <span class="label">Peças:</span> {{Piece_Description}}
+            </div>
+        </div>
+
+        <div style="border-bottom: 2px solid #000; margin-bottom: 10px;"></div>
+
+        <!-- Grade Table -->
+        <div class="grade-section">
+            <div class="grade-header">GRADE A <span style="margin-left:50px; font-weight:400;">Praça: {{Plaza}}</span>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30px;">Peça</th>
+                        <th>Local</th>
+                        <th>Formato</th>
+                        <th>Início</th>
+                        <th>Fim</th>
+                        <th class="text-center">Inser.</th>
+                        <th class="text-right">Valor unit.</th>
+                        <th class="text-center">Desc.</th>
+                        <th class="text-right">Valor total</th>
+                        <th class="text-center">B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">A</td>
+                        <td>{{Location}}</td>
+                        <td>{{Format}}</td>
+                        <td class="text-center">{{Start_Date}}</td>
+                        <td class="text-center">{{End_Date}}</td>
+                        <td class="text-center">{{Insertions}}</td>
+                        <td class="text-right">{{Unit_Value}}</td>
+                        <td class="text-center">-</td>
+                        <td class="text-right">{{Total_Value}}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="total-row">
+            Total (R$): 0,00
+        </div>
+
+        <!-- Bottom Boxes -->
+        <div class="footer-boxes">
+            <div class="box-left">
+                <div>
+                    <span class="box-title" style="padding:5px;">Valores Finais</span>
+                    <div class="val-row">
+                        <span>Valor bruto:</span>
+                        <span>0,00</span>
+                    </div>
+                </div>
+                <div class="val-row val-total">
+                    <span>Total a Pagar:</span>
+                    <span>{{Net_Total}}</span>
+                </div>
+            </div>
+
+            <div class="box-middle">
+                <span class="box-title">INSTRUÇÃO DE FATURAMENTO AO CLIENTE</span>
+                <div style="font-style:italic;">Aos Cuidados da Agência</div>
+            </div>
+
+            <div class="box-right">
+                <div style="margin-bottom:10px;">
+                    <span class="box-title">DADOS DO VEÍCULO: {{Vehicle_Name}}</span>
+                    {{Vehicle_Data}}
+                </div>
+                <div>
+                    <span class="box-title">DADOS DO CLIENTE: {{Advertiser_Name}}</span>
+                    {{Client_Data}}
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="page-footer">
+            <div>1/2 &nbsp;&nbsp;&nbsp; MOU_413.6</div>
+            <div>Documento gerado pelo sistema Operand®</div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

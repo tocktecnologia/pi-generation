@@ -1,0 +1,197 @@
+/* Global Reset */
+:root {
+    --primary: #9d50bb;
+    --secondary: #6e48aa;
+    --background: #f0f2f5;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --text-main: #2d3748;
+    --text-light: #718096;
+    --input-border: #e2e8f0;
+    --input-focus: #9d50bb;
+    --radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Dynamic Background */
+.background-blob {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(135deg, #FF6B6B 0%, #cc5333 100%);
+    opacity: 0.08;
+    border-radius: 50%;
+    top: -200px;
+    left: -100px;
+    z-index: -1;
+    filter: blur(80px);
+    animation: move 20s infinite alternate;
+}
+
+.blob-2 {
+    background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+    top: auto;
+    bottom: -200px;
+    left: auto;
+    right: -100px;
+    animation: move 25s infinite alternate-reverse;
+}
+
+@keyframes move {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(50px, 50px) scale(1.1); }
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 900px;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Header */
+header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.group-title {
+    grid-column: 1 / -1;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid var(--input-border);
+    padding-bottom: 10px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group.full-width {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--text-main);
+}
+
+input, textarea {
+    padding: 12px 16px;
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius);
+    background: #fff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px rgba(157, 80, 187, 0.1);
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Button */
+.actions {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: #fff;
+    border: none;
+    padding: 14px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 20px rgba(110, 72, 170, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(110, 72, 170, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 20px;
+    }
+}

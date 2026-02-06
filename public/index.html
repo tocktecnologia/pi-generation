@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Pedido de Inserção</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-blob"></div>
+    <div class="background-blob blob-2"></div>
+
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Gerador de P.I.</h1>
+                <p>Preencha os dados abaixo para gerar o PDF automaticamente.</p>
+            </div>
+        </header>
+
+        <form id="piForm">
+            <div class="form-grid">
+                <!-- Group: Basic Info -->
+                <div class="group-title">Informações Básicas</div>
+
+                <div class="input-group">
+                    <label for="PI_Number">Nº do Pedido</label>
+                    <input type="text" id="PI_Number" name="PI_Number" placeholder="Ex: 413.6" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="Date">Data de Emissão</label>
+                    <input type="text" id="Date" name="Date" placeholder="DD/MM/AAAA">
+                </div>
+
+                <div class="input-group">
+                    <label for="Agency_Contact">Contato Agência</label>
+                    <input type="text" id="Agency_Contact" name="Agency_Contact" placeholder="Nome do Contato">
+                </div>
+
+                <div class="input-group">
+                    <label for="Vehicle_Name">Veículo</label>
+                    <input type="text" id="Vehicle_Name" name="Vehicle_Name" placeholder="Ex: ELETROMÍDIA">
+                </div>
+
+                <!-- Group: Campaign Info -->
+                <div class="group-title">Campanha</div>
+
+                <div class="input-group">
+                    <label for="Advertiser_Name">Anunciante</label>
+                    <input type="text" id="Advertiser_Name" name="Advertiser_Name">
+                </div>
+
+                <div class="input-group">
+                    <label for="Project_Name">Projeto</label>
+                    <input type="text" id="Project_Name" name="Project_Name">
+                </div>
+
+                <div class="input-group full-width">
+                    <label for="Piece_Description">Descrição das Peças</label>
+                    <input type="text" id="Piece_Description" name="Piece_Description"
+                        placeholder="Ex: A - VT 10&quot;">
+                </div>
+
+                <!-- Group: Placement Details -->
+                <div class="group-title">Detalhes da Veiculação</div>
+
+                <div class="input-group">
+                    <label for="Plaza">Praça</label>
+                    <input type="text" id="Plaza" name="Plaza" placeholder="Ex: Fortaleza">
+                </div>
+
+                <div class="input-group">
+                    <label for="Location">Local</label>
+                    <input type="text" id="Location" name="Location" placeholder="Ex: Edifícios Comerciais">
+                </div>
+
+                <div class="input-group">
+                    <label for="Format">Formato</label>
+                    <input type="text" id="Format" name="Format" placeholder="Ex: VT 10&quot;">
+                </div>
+
+                <div class="input-group">
+                    <label for="Start_Date">Início</label>
+                    <input type="text" id="Start_Date" name="Start_Date" placeholder="DD/MM/AAAA">
+                </div>
+
+                <div class="input-group">
+                    <label for="End_Date">Fim</label>
+                    <input type="text" id="End_Date" name="End_Date" placeholder="DD/MM/AAAA">
+                </div>
+
+                <div class="input-group">
+                    <label for="Insertions">Inserções</label>
+                    <input type="number" id="Insertions" name="Insertions" value="1">
+                </div>
+
+                <!-- Group: Values -->
+                <div class="group-title">Valores (R$)</div>
+
+                <div class="input-group">
+                    <label for="Unit_Value">Valor Unitário</label>
+                    <input type="text" id="Unit_Value" name="Unit_Value" placeholder="0,00">
+                </div>
+
+                <div class="input-group">
+                    <label for="Total_Value">Valor Total</label>
+                    <input type="text" id="Total_Value" name="Total_Value" placeholder="0,00">
+                </div>
+
+                <div class="input-group">
+                    <label for="Net_Total">Total Líquido</label>
+                    <input type="text" id="Net_Total" name="Net_Total" placeholder="0,00">
+                </div>
+
+                <!-- Group: Legal Data -->
+                <div class="group-title">Dados Cadastrais</div>
+
+                <div class="input-group full-width">
+                    <label for="Vehicle_Data">Dados do Veículo (HTML permitido)</label>
+                    <textarea id="Vehicle_Data" name="Vehicle_Data" rows="3"></textarea>
+                </div>
+
+                <div class="input-group full-width">
+                    <label for="Client_Data">Dados do Cliente (HTML permitido)</label>
+                    <textarea id="Client_Data" name="Client_Data" rows="3"></textarea>
+                </div>
+
+            </div>
+
+            <div class="actions">
+                <button type="submit" id="generateBtn">
+                    <span class="btn-text">Gerar PDF</span>
+                    <span class="loading-spinner"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
