@@ -13,7 +13,7 @@ app.use(express.static('public'));
 app.post('/generate', async (req, res) => {
     try {
         const data = req.body;
-        const templatePath = path.join(__dirname, 'template.html');
+        const templatePath = path.join(__dirname, 'public', 'template.html');
 
         if (!fs.existsSync(templatePath)) {
             return res.status(500).send('Template file not found');

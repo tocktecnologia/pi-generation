@@ -13,40 +13,44 @@ document.getElementById('piForm').addEventListener('submit', async function (e) 
     const data = Object.fromEntries(formData.entries());
 
     try {
-        const response = await fetch('/generate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+        // Fetch template
+        // Note: template.html is expected to be in the same directory (public/)
+        const response = await fetch('template.html');
+        if (!response.ok) throw new Error('Template not found');
+        
+        let html = await response.text();
 
-        if (!response.ok) {
-            throw new Error('Erro na geração do PDF');
+        // Replace placeholders
+        for (const [key, value] of Object.entries(data)) {
+            const regex = new RegExp(`{{${key}}}`, 'g');
+            html = html.replace(regex, value || '');
         }
 
-        // Handle file download
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
+        // Create a temporary container for the HTML
+        const container = document.createElement('div');
+        container.innerHTML = html;
+        container.style.position = 'fixed'; // Keep it off-screen or overlay
+        container.style.left = '-9999px';
+        container.style.top = '0';
+        container.style.width = '210mm'; // A4 width
+        document.body.appendChild(container);
 
-        // Extract filename from header or default
-        const contentDisposition = response.headers.get('Content-Disposition');
-        let fileName = `pi_${data.PI_Number || 'output'}.pdf`;
-        if (contentDisposition) {
-            const match = contentDisposition.match(/filename="(.+)"/);
-            if (match && match[1]) fileName = match[1];
-        }
+        // Options for html2pdf
+        const opt = {
+            margin:       10, // mm
+            filename:     `pi_${data.PI_Number || 'output'}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true }, // scale 2 for better quality
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
 
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
+        // Generate PDF
+        await html2pdf().set(opt).from(container).save();
 
-        window.URL.revokeObjectURL(url);
+        // Cleanup
+        document.body.removeChild(container);
 
-        // Success feedback (optional, maybe reset text or show "Done!")
+        // Success feedback
         btn.querySelector('.btn-text').innerText = 'Sucesso!';
         setTimeout(() => {
             btn.querySelector('.btn-text').innerText = originalText;
@@ -55,7 +59,7 @@ document.getElementById('piForm').addEventListener('submit', async function (e) 
 
     } catch (error) {
         console.error(error);
-        alert('Ocorreu um erro ao gerar o PDF. Verifique o console.');
+        alert('Ocorreu um erro ao gerar o PDF: ' + error.message);
         btn.querySelector('.btn-text').innerText = originalText;
         btn.disabled = false;
     }
