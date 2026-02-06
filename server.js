@@ -8,12 +8,12 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('.'));
 
 app.post('/generate', async (req, res) => {
     try {
         const data = req.body;
-        const templatePath = path.join(__dirname, 'public', 'template.html');
+        const templatePath = path.join(__dirname, 'template.html');
 
         if (!fs.existsSync(templatePath)) {
             return res.status(500).send('Template file not found');

@@ -1,3 +1,19 @@
+// Load saved data from localStorage
+document.addEventListener('DOMContentLoaded', () => {
+    const inputs = document.querySelectorAll('#piForm input, #piForm textarea');
+    inputs.forEach(input => {
+        const savedValue = localStorage.getItem('pi_gen_' + input.id);
+        if (savedValue) {
+            input.value = savedValue;
+        }
+
+        // Save data on input change
+        input.addEventListener('input', (e) => {
+            localStorage.setItem('pi_gen_' + e.target.id, e.target.value);
+        });
+    });
+});
+
 document.getElementById('piForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -14,10 +30,9 @@ document.getElementById('piForm').addEventListener('submit', async function (e) 
 
     try {
         // Fetch template
-        // Note: template.html is expected to be in the same directory (public/)
         const response = await fetch('template.html');
         if (!response.ok) throw new Error('Template not found');
-        
+
         let html = await response.text();
 
         // Replace placeholders
@@ -37,11 +52,11 @@ document.getElementById('piForm').addEventListener('submit', async function (e) 
 
         // Options for html2pdf
         const opt = {
-            margin:       10, // mm
-            filename:     `pi_${data.PI_Number || 'output'}.pdf`,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true }, // scale 2 for better quality
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            margin: 10, // mm
+            filename: `pi_${data.PI_Number || 'output'}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true }, // scale 2 for better quality
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
         // Generate PDF
